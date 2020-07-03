@@ -1,12 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-// import React from 'react';
-// import { StyleSheet, Text, View } from 'react-native';
-import DashboardScreen from './app/screens/DashboardScreen';
-import HomeScreen from './app/screens/HomeScreen';
-import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import React from "react";
+import { StatusBar } from "expo-status-bar";
+import store from "./redux/store";
+import { Provider } from "react-redux";
+import WelcomeScreen from "./app/screens/welcome/WelcomeScreen";
+import LoginScreen from "./app/screens/welcome/LoginScreen";
+import RegisterScreen from "./app/screens/welcome/RegisterScreen";
+import { createSwitchNavigator, createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 
-const App = createSwitchNavigator({
-  DashboardScreen:DashboardScreen,
-  HomeScreen:HomeScreen
+// const HomeScreen = createStackNavigator({
+//   WelcomeScreen: WelcomeScreen,
+//   LoginScreen: LoginScreen,
+//   RegisterScreen: RegisterScreen,
+// });
+
+const screens = createSwitchNavigator({
+  WelcomeScreen: WelcomeScreen,
+  LoginScreen: LoginScreen,
+  RegisterScreen: RegisterScreen,
 });
-export default createAppContainer(App);
+
+const Index = createAppContainer(screens);
+
+export default function App() {
+  return (
+    <Provider store={store}>
+      <Index />
+      <StatusBar style="auto" />
+    </Provider>
+  );
+}
