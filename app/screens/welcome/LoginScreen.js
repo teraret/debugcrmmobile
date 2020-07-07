@@ -1,7 +1,9 @@
-import * as React from "react";
+import React from "react";
 import { View, StyleSheet, ScrollView, Text } from "react-native";
 import { Formik } from "formik";
 import { HelperText, Button, TextInput } from "react-native-paper";
+import { loadLoginSuccess } from "../../../redux/index";
+import { useSelector, useDispatch } from "react-redux";
 import * as yup from "yup";
 const LoginSchema = yup.object({
   email: yup.string().required().min(6),
@@ -9,7 +11,14 @@ const LoginSchema = yup.object({
 });
 
 function LoginScreen({ navigation }) {
-  const pressRegisterHandler = () => {
+  const logindata = useSelector((state) => state.login);
+  const dispatch = useDispatch();
+
+  const customLoginHandler = () => {
+    navigation.navigate("DashboardScreen");
+  };
+
+  const pressLoginHandler = () => {
     navigation.navigate("RegisterScreen");
   };
 
@@ -20,34 +29,43 @@ function LoginScreen({ navigation }) {
         <Formik
           initialValues={{ email: "", password: "" }}
           validationSchema={LoginSchema}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          onSubmit={(event) => dispatch(loadLoginSuccess(event))}
         >
-          {(props) => (
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+            /* and other goodies */
+          }) => (
             <View>
               <TextInput
                 label="E-mail"
                 mode="outlined"
-                value={props.values.email}
-                onBlur={props.handleBlur("email")}
-                onChangeText={props.handleChange("email")}
+                name="email"
+                value={values.email}
+                onBlur={handleBlur("email")}
+                onChangeText={handleChange("email")}
               />
               <HelperText>
-                {props.touched.email && props.errors.email}
+                {errors.email && touched.email && errors.email}
               </HelperText>
               <TextInput
                 label="Password"
                 mode="outlined"
                 secureTextEntry={true}
-                value={props.values.password}
-                onBlur={props.handleBlur("password")}
-                onChangeText={props.handleChange("password")}
+                name="password"
+                value={values.password}
+                onBlur={handleBlur("password")}
+                onChangeText={handleChange("password")}
               />
               <HelperText>
-                {props.touched.password && props.errors.password}
+                {errors.password && touched.password && errors.password}
               </HelperText>
-              <Button mode="contained" onPress={props.handleSubmit}>
+              <Button mode="contained" onPress={handleSubmit}>
                 Submit
               </Button>
             </View>

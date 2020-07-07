@@ -1,11 +1,13 @@
 import React from "react";
 import { ImageBackground, StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
-
+import Auth from "./../../../security/auth"
+;
 function DashboardScreen({ navigation }) {
-  const pressHandler = () => {
-    navigation.navigate("HomeScreen");
+  const logoutHandler = () => {
+    Auth.logOut();
   };
+
   return (
     <ImageBackground
       style={styles.background}
@@ -13,15 +15,12 @@ function DashboardScreen({ navigation }) {
         uri: "https://source.unsplash.com/1600x900/?medical",
       }}
     >
-      <Button style={styles.loginButton} mode="outlined" onPress={pressHandler}>
-        Login
-      </Button>
       <Button
-        style={styles.registerButton}
+        style={styles.loginButton}
         mode="outlined"
-        onPress={pressHandler}
+        onPress={logoutHandler}
       >
-        Register
+        Login
       </Button>
     </ImageBackground>
   );

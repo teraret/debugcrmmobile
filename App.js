@@ -1,32 +1,75 @@
-import React from "react";
-import { StatusBar } from "expo-status-bar";
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 import store from "./redux/store";
 import { Provider } from "react-redux";
+import Auth from "./security/auth";
+import { useSelector, useDispatch } from "react-redux";
 import WelcomeScreen from "./app/screens/welcome/WelcomeScreen";
 import LoginScreen from "./app/screens/welcome/LoginScreen";
 import RegisterScreen from "./app/screens/welcome/RegisterScreen";
-import { createSwitchNavigator, createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
+import DashboardScreen from "./app/screens/dashboard/DashboardScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  logoutHandler,
+  loadLoginSuccess,
+  loadLogoutSuccess,
+} from "./redux/index";
 
-// const HomeScreen = createStackNavigator({
-//   WelcomeScreen: WelcomeScreen,
-//   LoginScreen: LoginScreen,
-//   RegisterScreen: RegisterScreen,
-// });
+const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
-const screens = createSwitchNavigator({
-  WelcomeScreen: WelcomeScreen,
-  LoginScreen: LoginScreen,
-  RegisterScreen: RegisterScreen,
-});
+function HomeScreen() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+    </Stack.Navigator>
+  );
+}
 
-const Index = createAppContainer(screens);
+function Index(props) {
+  const dispatch = useDispatch();
+  const companydata = useSelector((state) => state.login);
 
-export default function App() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [errors, setErrors] = useState({});
+  console.log("The value " + companydata.loggedIn);
+  //setIsLoading(companydata);
+
+  useEffect(() => {
+    console.log("app mounting...");
+    (async () => {
+      if (await Auth.loggedIn()) {
+        dispatch(loadLoginSuccess);
+      } else {
+        dispatch(loadLogoutSuccess);
+      }
+    })();
+  });
+
+  return (
+    <NavigationContainer>
+      {companydata.loggedIn ? (
+        <Drawer.Navigator>
+          <Drawer.Screen name="DashboardScreen" component={DashboardScreen} />
+        </Drawer.Navigator>
+      ) : (
+        <HomeScreen />
+      )}
+    </NavigationContainer>
+  );
+}
+
+function App() {
   return (
     <Provider store={store}>
       <Index />
-      <StatusBar style="auto" />
     </Provider>
   );
 }
+
+export default App;
