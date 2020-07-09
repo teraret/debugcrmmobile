@@ -11,11 +11,7 @@ import DashboardScreen from "./app/screens/dashboard/DashboardScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import {
-  logoutHandler,
-  loadLoginSuccess,
-  loadLogoutSuccess,
-} from "./redux/index";
+import { RetriveTokkenSuccess } from "./redux/index";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -34,21 +30,15 @@ function Index(props) {
   const dispatch = useDispatch();
   const companydata = useSelector((state) => state.login);
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [errors, setErrors] = useState({});
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
+  // const [errors, setErrors] = useState({});
   console.log("The value " + companydata.loggedIn);
   //setIsLoading(companydata);
 
   useEffect(() => {
     console.log("app mounting...");
-    (async () => {
-      if (await Auth.loggedIn()) {
-        dispatch(loadLoginSuccess);
-      } else {
-        dispatch(loadLogoutSuccess);
-      }
-    })();
+    //dispatch(RetriveTokkenSuccess);
   });
 
   return (

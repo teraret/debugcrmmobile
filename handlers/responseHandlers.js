@@ -12,7 +12,6 @@ export const checkResponseStatus = (response) => {
 
 export const loginResponseHandler = (response, handler) => {
   Auth.logIn(response);
-
   if (handler) {
     handler.call();
   }

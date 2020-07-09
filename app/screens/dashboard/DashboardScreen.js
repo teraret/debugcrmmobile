@@ -1,40 +1,56 @@
-import React from "react";
-import { ImageBackground, StyleSheet } from "react-native";
-import { Button } from "react-native-paper";
-import Auth from "./../../../security/auth"
-;
+import React, { useState, useEffect } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { Button, Text } from "react-native-paper";
+import Auth from "./../../../security/auth";
+import AsyncStorage from "@react-native-community/async-storage";
+
 function DashboardScreen({ navigation }) {
+  const [token, setToken] = useState("");
+
   const logoutHandler = () => {
     Auth.logOut();
   };
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const value = await AsyncStorage.getItem("access_token");
+        if (value !== null) {
+          setToken("the value is" + value.toString);
+          console.log("the value is" + value.toString);
+        }
+      } catch (e) {
+        // error reading value
+      }
+    })();
+  });
+
   return (
-    <ImageBackground
-      style={styles.background}
-      source={{
-        uri: "https://source.unsplash.com/1600x900/?medical",
-      }}
-    >
-      <Button
-        style={styles.loginButton}
-        mode="outlined"
-        onPress={logoutHandler}
-      >
-        Login
-      </Button>
-    </ImageBackground>
+    <View style={styles.containerStyle}>
+      <ScrollView contentContainerStyle={styles.scrollViewStyle}>
+        <Text>hello {AsyncStorage.getItem("access_token").toString()}</Text>
+        <Button mode="outlined" onPress={logoutHandler}>
+          Login
+        </Button>
+      </ScrollView>
+    </View>
   );
 }
 export default DashboardScreen;
 const styles = StyleSheet.create({
-  background: {
+  containerStyle: {
     flex: 1,
+  },
+
+  scrollViewStyle: {
+    flex: 1,
+    padding: 15,
     justifyContent: "center",
   },
-  loginButton: {
-    backgroundColor: "#008000",
-  },
-  registerButton: {
-    backgroundColor: "#FFA500",
+
+  headingStyle: {
+    fontSize: 30,
+    textAlign: "center",
+    marginBottom: 40,
   },
 });

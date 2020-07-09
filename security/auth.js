@@ -5,11 +5,19 @@ import qs from "qs";
 import AsyncStorage from "@react-native-community/async-storage";
 
 export default {
-  logIn(auth) {
-    AsyncStorage.auth = JSON.stringify(auth);
+  async logIn(auth) {
+    try {
+      await AsyncStorage.setItem("access_token",  JSON.stringify(auth))
+    } catch (err) {
+      console.log(`The error is: ${err}`);
+    }
   },
-  logOut() {
-    delete AsyncStorage.auth;
+  async logOut() {
+    try {
+      await AsyncStorage.removeItem("access_token");
+    } catch (err) {
+      console.log(`The error is: ${err}`);
+    }
   },
 
   refreshToken() {

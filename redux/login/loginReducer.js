@@ -5,7 +5,7 @@ const initialState = {
   loggedIn: false,
 };
 
-const companyReducer = (state = initialState, action) => {
+const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case RETRIVE_TOKKEN:
       return {
@@ -16,16 +16,17 @@ const companyReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        loggedIn: true,
+        token: action.token,
       };
     case LOGOUT:
       return {
+        ...state,
         loading: false,
-        loggedIn: false,
+        token: null,
       };
     default:
       return state;
   }
 };
 
-export default companyReducer;
+export default loginReducer;
