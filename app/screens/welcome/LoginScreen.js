@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, ScrollView, Text } from "react-native";
 import { Formik } from "formik";
 import { HelperText, Button, TextInput } from "react-native-paper";
-import { loadLoginSuccess } from "../../../redux/index";
+import { LoginSubmit } from "../../../redux/index";
 import { useSelector, useDispatch } from "react-redux";
 import * as yup from "yup";
 const LoginSchema = yup.object({
@@ -29,7 +29,7 @@ function LoginScreen({ navigation }) {
         <Formik
           initialValues={{ email: "", password: "" }}
           validationSchema={LoginSchema}
-          onSubmit={(event) => dispatch(loadLoginSuccess(event))}
+          onSubmit={(event) => dispatch(LoginSubmit(event))}
         >
           {({
             values,

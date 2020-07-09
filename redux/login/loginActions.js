@@ -9,9 +9,10 @@ import Auth from "./../../security/auth";
 
 import AsyncStorage from "@react-native-community/async-storage";
 
-const loadRetriveTokkenSuccess = () => {
+const loadRetriveTokenSuccess = (token) => {
   return {
-    type: RETRIVE_TOKKEN,
+    type: RETRIVE_TOKEN,
+    payload: token,
   };
 };
 
@@ -28,14 +29,13 @@ export const loadLogoutSuccess = () => {
   };
 };
 
-const customLoginHandler = () => {};
-
-export const RetriveTokkenSuccess = () => {
-  return (dispatch) => {
-    if (Auth.loggedIn()) {
-      dispatch(loadLoginSuccess);
-    } else {
-      dispatch(loadLogoutSuccess);
+export const RetriveTokenSuccess = () => {
+  return async (dispatch) => {
+    try {
+      let value = await AsyncStorage.getItem("access_token");
+      dispatch(loadRetriveTokenSuccess(value));
+    } catch (e) {
+      // error reading value
     }
   };
 };
@@ -51,7 +51,7 @@ export const LoginSubmit = (e) => {
       .then(checkResponseStatus)
       .then(async (response) => {
         try {
-          const jsonValue = null;
+          let jsonValue = null;
           jsonValue = JSON.stringify(response);
           await AsyncStorage.setItem("access_token", jsonValue);
           dispatch(loadLoginSuccess(jsonValue));
@@ -64,7 +64,12 @@ export const LoginSubmit = (e) => {
 };
 
 export const logoutHandler = () => {
-  return (dispatch) => {
-    Auth.logOut();
+  return async (dispatch) => {
+    try {
+      await AsyncStorage.removeItem("access_token");
+      dispatch(loadLogoutSuccess);
+    } catch (e) {
+      // error reading value
+    }
   };
 };

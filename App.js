@@ -11,7 +11,7 @@ import DashboardScreen from "./app/screens/dashboard/DashboardScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { RetriveTokkenSuccess } from "./redux/index";
+import { RetriveTokenSuccess } from "./redux/index";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -33,17 +33,17 @@ function Index(props) {
   // const [isLoading, setIsLoading] = useState(false);
   // const [loggedIn, setLoggedIn] = useState(false);
   // const [errors, setErrors] = useState({});
-  console.log("The value " + companydata.loggedIn);
+  console.log("The value of token is" + companydata.token);
   //setIsLoading(companydata);
 
   useEffect(() => {
     console.log("app mounting...");
-    //dispatch(RetriveTokkenSuccess);
+    //dispatch(RetriveTokenSuccess)();
   });
 
   return (
     <NavigationContainer>
-      {companydata.loggedIn ? (
+      {companydata.token != null ? (
         <Drawer.Navigator>
           <Drawer.Screen name="DashboardScreen" component={DashboardScreen} />
         </Drawer.Navigator>
