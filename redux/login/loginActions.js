@@ -30,7 +30,11 @@ export const RetriveTokenSuccess = () => {
   return async (dispatch) => {
     try {
       let value = await AsyncStorage.getItem("access_token");
-      dispatch(loadRetriveTokenSuccess(value));
+      if (value == null) {
+        dispatch(loadLogoutSuccess());
+      } else {
+        dispatch(loadLoginSuccess(value));
+      }
     } catch (e) {
       // error reading value
     }

@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
+import React, { useEffect } from "react";
 import store from "./redux/store";
 import { Provider } from "react-redux";
-import Auth from "./security/auth";
 import { useSelector, useDispatch } from "react-redux";
 import WelcomeScreen from "./app/screens/welcome/WelcomeScreen";
 import LoginScreen from "./app/screens/welcome/LoginScreen";
@@ -59,5 +57,4 @@ function App() {
     </Provider>
   );
 }
-
 export default App;
