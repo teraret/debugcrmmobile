@@ -39,7 +39,7 @@ function LoginScreen({ navigation }) {
             handleBlur,
             handleSubmit,
             isSubmitting,
-            /* and other goodies */
+          
           }) => (
             <View>
               <TextInput

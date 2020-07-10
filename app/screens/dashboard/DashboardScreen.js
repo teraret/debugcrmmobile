@@ -3,13 +3,24 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 import { logoutHandler, loadLogoutSuccess } from "../../../redux/index";
 import { useSelector, useDispatch } from "react-redux";
+import AsyncStorage from "@react-native-community/async-storage";
+import { Formik } from "formik";
 
 function DashboardScreen({ navigation }) {
-  const [token, setToken] = useState("");
+  //  const [token, setToken] = useState("");
+  const companydata = useSelector((state) => state.login);
+
   const dispatch = useDispatch();
 
   // const logoutHandler = () => {
-  //   Auth.logOut();
+  //   dispatch(loadLogoutSuccess);
+  //   console.log("Logout Pressed");
+  //   // try {
+  //   //   await AsyncStorage.removeItem("access_token");
+  //   //   dispatch(loadLogoutSuccess);
+  //   // } catch (e) {
+  //   //   console.log(e);
+  //   // }
   // };
 
   // useEffect(() => {
@@ -29,10 +40,26 @@ function DashboardScreen({ navigation }) {
   return (
     <View style={styles.containerStyle}>
       <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-        <Text>hello </Text>
-        <Button mode="outlined" onPress={() => dispatch(loadLogoutSuccess())}>
-          Login
+        {/* <Text>hello {companydata.token}</Text> */}
+
+        <Button mode="outlined" onPress={() => dispatch(logoutHandler())}>
+          logout
         </Button>
+        {/* <Formik onSubmit={() => logoutHandler()}>
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+          }) => (
+            <Button mode="outlined" onPress={() => handleSubmit()}>
+              Login
+            </Button>
+          )}
+        </Formik> */}
       </ScrollView>
     </View>
   );

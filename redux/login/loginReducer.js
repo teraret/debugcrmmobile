@@ -2,6 +2,7 @@ import { RETRIVE_TOKKEN, LOGIN, LOGOUT } from "./loginType";
 
 const initialState = {
   loading: true,
+  token: null,
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -22,7 +23,7 @@ const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        token: null,
+        token: action.payload,
       };
     default:
       return state;

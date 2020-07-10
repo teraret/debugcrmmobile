@@ -1,15 +1,11 @@
 import { LOGIN, LOGOUT } from "./loginType";
 import axios from "axios";
 import SERVER_URL from "./../../config";
-import {
-  checkResponseStatus,
-  loginResponseHandler,
-} from "./../../handlers/responseHandlers";
-import Auth from "./../../security/auth";
+import { checkResponseStatus } from "./../../handlers/responseHandlers";
 
 import AsyncStorage from "@react-native-community/async-storage";
 
-const loadRetriveTokenSuccess = (token) => {
+export const loadRetriveTokenSuccess = (token) => {
   return {
     type: RETRIVE_TOKEN,
     payload: token,
@@ -26,6 +22,7 @@ export const loadLoginSuccess = (token) => {
 export const loadLogoutSuccess = () => {
   return {
     type: LOGOUT,
+    payload: null,
   };
 };
 
@@ -67,9 +64,9 @@ export const logoutHandler = () => {
   return async (dispatch) => {
     try {
       await AsyncStorage.removeItem("access_token");
-      dispatch(loadLogoutSuccess);
+      dispatch(loadLogoutSuccess());
     } catch (e) {
-      // error reading value
+      console.log(e);
     }
   };
 };

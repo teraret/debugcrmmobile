@@ -19,7 +19,11 @@ const Stack = createStackNavigator();
 function HomeScreen() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="WelcomeScreen"
+        component={WelcomeScreen}
+      />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
     </Stack.Navigator>
@@ -29,26 +33,20 @@ function HomeScreen() {
 function Index(props) {
   const dispatch = useDispatch();
   const companydata = useSelector((state) => state.login);
-
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [loggedIn, setLoggedIn] = useState(false);
-  // const [errors, setErrors] = useState({});
   console.log("The value of token is" + companydata.token);
-  //setIsLoading(companydata);
-
   useEffect(() => {
     console.log("app mounting...");
-    //dispatch(RetriveTokenSuccess)();
-  });
+    dispatch(RetriveTokenSuccess());
+  }, []);
 
   return (
     <NavigationContainer>
-      {companydata.token != null ? (
+      {companydata.token == null ? (
+        <HomeScreen />
+      ) : (
         <Drawer.Navigator>
           <Drawer.Screen name="DashboardScreen" component={DashboardScreen} />
         </Drawer.Navigator>
-      ) : (
-        <HomeScreen />
       )}
     </NavigationContainer>
   );
