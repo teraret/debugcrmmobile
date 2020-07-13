@@ -3,8 +3,15 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 import { logoutHandler, loadLogoutSuccess } from "../../../redux/index";
 import { useSelector, useDispatch } from "react-redux";
-import AsyncStorage from "@react-native-community/async-storage";
-import { Formik } from "formik";
+
+import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
+
+const data = [
+  { quarter: 1, earnings: 13000 },
+  { quarter: 2, earnings: 16500 },
+  { quarter: 3, earnings: 14250 },
+  { quarter: 4, earnings: 19000 },
+];
 
 function DashboardScreen({ navigation }) {
   //  const [token, setToken] = useState("");
@@ -12,54 +19,12 @@ function DashboardScreen({ navigation }) {
 
   const dispatch = useDispatch();
 
-  // const logoutHandler = () => {
-  //   dispatch(loadLogoutSuccess);
-  //   console.log("Logout Pressed");
-  //   // try {
-  //   //   await AsyncStorage.removeItem("access_token");
-  //   //   dispatch(loadLogoutSuccess);
-  //   // } catch (e) {
-  //   //   console.log(e);
-  //   // }
-  // };
-
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const value = await AsyncStorage.getItem("access_token");
-  //       if (value !== null) {
-  //         setToken("the value is" + value.toString);
-  //         console.log("the value is" + value.toString);
-  //       }
-  //     } catch (e) {
-  //       // error reading value
-  //     }
-  //   })();
-  // });
-
   return (
     <View style={styles.containerStyle}>
       <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-        {/* <Text>hello {companydata.token}</Text> */}
-
-        <Button mode="outlined" onPress={() => dispatch(logoutHandler())}>
-          logout
-        </Button>
-        {/* <Formik onSubmit={() => logoutHandler()}>
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            isSubmitting,
-          }) => (
-            <Button mode="outlined" onPress={() => handleSubmit()}>
-              Login
-            </Button>
-          )}
-        </Formik> */}
+        <VictoryChart width={350} theme={VictoryTheme.material}>
+          <VictoryBar data={data} x="quarter" y="earnings" />
+        </VictoryChart>
       </ScrollView>
     </View>
   );

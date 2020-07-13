@@ -2,12 +2,12 @@ import React from "react";
 import { ImageBackground, StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 
-function WelcomeScreen({ navigation }) {
+function WelcomeScreen(props) {
   const pressLoginHandler = () => {
-    navigation.navigate("LoginScreen");
+    props.navigation.navigate("LoginScreen");
   };
   const pressRegisterHandler = () => {
-    navigation.navigate("RegisterScreen");
+    props.navigation.navigate("RegisterScreen");
   };
 
   return (

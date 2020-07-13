@@ -6,10 +6,12 @@ import WelcomeScreen from "./app/screens/welcome/WelcomeScreen";
 import LoginScreen from "./app/screens/welcome/LoginScreen";
 import RegisterScreen from "./app/screens/welcome/RegisterScreen";
 import DashboardScreen from "./app/screens/dashboard/DashboardScreen";
+import SalaryScreen from "./app/screens/salary/SalaryScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { RetriveTokenSuccess } from "./redux/index";
+import DrawerContent from "./app/screens/DrawerContent";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -42,8 +44,11 @@ function Index(props) {
       {companydata.token == null ? (
         <HomeScreen />
       ) : (
-        <Drawer.Navigator>
+        <Drawer.Navigator
+          drawerContent={(props) => <DrawerContent {...props} />}
+        >
           <Drawer.Screen name="DashboardScreen" component={DashboardScreen} />
+          <Drawer.Screen name="SalaryScreen" component={SalaryScreen} />
         </Drawer.Navigator>
       )}
     </NavigationContainer>

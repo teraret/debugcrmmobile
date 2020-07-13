@@ -1,2 +1,3 @@
-const SERVER_URL = "http://192.168.29.105:8080";
+const SERVER_URL =
+  "http://acceleratehrms-env-1.eba-dkbmr6es.ap-south-1.elasticbeanstalk.com";
 export default SERVER_URL;
