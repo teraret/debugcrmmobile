@@ -7,6 +7,7 @@ import LoginScreen from "./app/screens/welcome/LoginScreen";
 import RegisterScreen from "./app/screens/welcome/RegisterScreen";
 import DashboardScreen from "./app/screens/dashboard/DashboardScreen";
 import SalaryScreen from "./app/screens/salary/SalaryScreen";
+import UserScreen from "./app/screens/user/UserScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -49,6 +50,7 @@ function Index(props) {
         >
           <Drawer.Screen name="DashboardScreen" component={DashboardScreen} />
           <Drawer.Screen name="SalaryScreen" component={SalaryScreen} />
+          <Drawer.Screen name="UserScreen" component={UserScreen} />
         </Drawer.Navigator>
       )}
     </NavigationContainer>

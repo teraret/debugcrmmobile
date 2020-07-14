@@ -25,6 +25,10 @@ function DrawerContent(props) {
     props.navigation.navigate("SalaryScreen");
   };
 
+  const pressUserScreen = () => {
+    props.navigation.navigate("UserScreen");
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
@@ -73,6 +77,13 @@ function DrawerContent(props) {
               )}
               label="Salary"
               onPress={pressSalaryScreen}
+            />
+            <DrawerItem
+              icon={({ color, size }) => (
+                <Icon name="home-outline" color={color} size={size} />
+              )}
+              label="User"
+              onPress={pressUserScreen}
             />
           </Drawer.Section>
         </View>
