@@ -9,7 +9,7 @@ function UserScreen() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUsers());
+    dispatch(fetchUsers(userdata.sort, userdata.order, 10, 0));
   }, []);
 
   return userdata.loading ? (
@@ -34,10 +34,26 @@ function UserScreen() {
             onPageChange={(page) => {
               console.log(page);
             }}
-            label="1-2 of 6"
+            label="userdata.page"
           />
           <DataTable.Header>
-            <DataTable.Title>ID</DataTable.Title>
+            <DataTable.Title
+              onPress={() =>
+                dispatch(
+                  fetchUsers(
+                    "id",
+                    userdata.order === "desc" ? "asc" : "desc",
+                    10,
+                    0
+                  )
+                )
+              }
+              sortDirection={
+                userdata.order === "asc" ? "ascending" : "descending"
+              }
+            >
+              ID
+            </DataTable.Title>
             <DataTable.Title>First Name</DataTable.Title>
             <DataTable.Title>Last Name</DataTable.Title>
             <DataTable.Title>Mobile</DataTable.Title>

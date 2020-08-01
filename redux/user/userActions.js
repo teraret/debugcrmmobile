@@ -11,10 +11,14 @@ const fetchUsersRequest = () => {
   };
 };
 
-const fetchUsersSuccess = (users) => {
+const fetchUsersSuccess = (users, max, order, sort, offset) => {
   return {
     type: FETCH_USERS_SUCCESS,
     payload: users,
+    payloadmax: max,
+    payloadorder: order,
+    payloadsort: sort,
+    payloadoffset: offset,
   };
 };
 
@@ -24,14 +28,24 @@ const fetchUsersFailure = (error) => {
     payload: error,
   };
 };
-export const fetchUsers = () => {
+export const fetchUsers = (sort, order, max, offset) => {
   return (dispatch) => {
     dispatch(fetchUsersRequest);
     axios
-      .get(SERVER_URL + "/user?offset=0&max=10")
+      .get(
+        SERVER_URL +
+          "/user?max=" +
+          max +
+          "&offset=" +
+          offset +
+          "&order=" +
+          order +
+          "&sort=" +
+          sort
+      )
       .then((response) => {
         const users = response.data.user;
-        dispatch(fetchUsersSuccess(users));
+        dispatch(fetchUsersSuccess(users, max, order, sort, offset));
       })
       .catch((error) => {
         const errorMsg = error.message;
